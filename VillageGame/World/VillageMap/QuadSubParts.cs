@@ -1,0 +1,19 @@
+﻿public enum QuadPartialPosition
+{
+    Bottom,
+    Top,
+    Left,
+    Right,
+    BottomLeft,
+    BottomRight,
+    TopLeft,
+    TopRight,
+    BottomLeftFront,
+    BottomLeftBack,
+    BottomRightFront,
+    BottomRightBack,
+    TopLeftFront,
+    TopLeftBack,
+    TopRightFront,
+    TopRightBack
+}
