@@ -19,7 +19,7 @@ namespace Village
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         TestArena test;
-        PrimitiveGenerator generator = new PrimitiveGenerator(256, 256, 128);
+        //PrimitiveGenerator generator = new PrimitiveGenerator(256, 256, 128);
 
         public Game1()
         {
