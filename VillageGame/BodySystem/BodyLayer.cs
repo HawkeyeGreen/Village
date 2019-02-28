@@ -33,9 +33,35 @@ namespace Village.VillageGame.BodySystem
             
         }
 
-        public void ApplyAttack(AttackNugget attack)
+        public LayerDamage ApplyAttack(AttackNugget attack)
         {
-            
+            MaterialAnswer answer = material.ApplyForce(attack.Force, attack.Weapon.Sharpness, attack.Weapon.Material);
+            LayerDamage damage;
+            switch (answer)
+            {
+                case MaterialAnswer.Repelled:
+                    return new LayerDamage(LayerDamageDepth.Surface, attack.HitArea , WoundType.Scratch);
+                case MaterialAnswer.Withstand:
+                    return LayerDamage.NoDamage;
+                case MaterialAnswer.Penetrated:
+                    damage = new LayerDamage(LayerDamageDepth.Penetrated, attack.HitArea, WoundType.Puncture);
+                    damages.Add(damage);
+                    return damage;
+                case MaterialAnswer.Cutted:
+                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Cut);
+                    damages.Add(damage);
+                    return damage;
+                case MaterialAnswer.Bend:
+                    damage = new LayerDamage(LayerDamageDepth.HalfDeep, attack.HitArea, WoundType.Blunt);
+                    damages.Add(damage);
+                    return damage;
+                case MaterialAnswer.Broken:
+                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Blunt);
+                    damages.Add(damage);
+                    return damage;
+                default:
+                    return LayerDamage.NoDamage;
+            }
         }
     }
 }

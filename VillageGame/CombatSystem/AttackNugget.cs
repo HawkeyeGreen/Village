@@ -13,6 +13,7 @@ namespace Village.VillageGame.CombatSystem
         private double hitChance;
         public double HitChance => hitChance;
 
-
+        private double hitArea;
+        public double HitArea => hitArea;
     }
 }

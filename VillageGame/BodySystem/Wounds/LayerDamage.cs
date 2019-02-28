@@ -11,12 +11,15 @@ namespace Village.VillageGame.BodySystem.Wounds
         public double Area => area;
         public WoundType Type => type;
 
+        public static LayerDamage NoDamage => new LayerDamage(LayerDamageDepth.Surface, 0, WoundType.Not_A_Touch);
+
         public LayerDamage(LayerDamageDepth depth, double area, WoundType type)
         {
             this.depth = depth;
             this.area = area;
             this.type = type;
         }
+
     }
 
     /// <summary>

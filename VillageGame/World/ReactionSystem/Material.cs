@@ -38,6 +38,8 @@ namespace Village.VillageGame.World.ReactionSystem
         public bool Penetrable => tags.ContainsTag(penetrable);
         public bool Cutable => tags.ContainsTag(cutable);
 
+        public Substance Substance => substance;
+
         // Ab welcher Schärfe dieses Material geschnitten werden kann
         private int cuttingPoint;
 
@@ -115,10 +117,10 @@ namespace Village.VillageGame.World.ReactionSystem
         /// <param name="sharpness">Schärfegrad</param>
         /// <param name="substance2">Die Substanz aus der der Träger der Kraft besteht</param>
         /// <returns></returns>
-        public MaterialAnswer ApplyForce(double forcePerUnit, int sharpness, Substance substance2)
+        public MaterialAnswer ApplyForce(double forcePerUnit, int sharpness, Material material)
         {
             // Ist dieses Material härter, so wirft es den Angriff zurück
-            if(substance.Hardness > substance2.Hardness)
+            if(substance.Hardness > material.Substance.Hardness)
             {
                 return MaterialAnswer.Repelled;
             }
