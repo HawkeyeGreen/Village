@@ -10,7 +10,6 @@ namespace Village.VillageGame.BodySystem
 {
     class Organ
     {
-        private static readonly string BODY_DB_KEY = "Body";
         private int ID;
 
         // Namen, NamenLink und BeschreibungsLink
@@ -80,10 +79,10 @@ namespace Village.VillageGame.BodySystem
             subscribers = new List<VitalSystem>();
             tags = new TagSystem.TagSet();
 
-            tags.FillTagSet(name, BODY_DB_KEY);
+            tags.FillTagSet(name, DBHelper.BODY_DB_KEY);
             Init(_Body, _bodyPart);
-            LoadTemplate(DBHelper.ExecuteQuery("SELECT * FROM OrganTemplates WHERE name='" + name + "';", BODY_DB_KEY).CreateDataReader());
-            LoadTemplateVitalLinks(DBHelper.ExecuteQuery("SELECT * FROM OrganVitalTemplates WHERE oName='" + name + "';", BODY_DB_KEY).CreateDataReader());
+            LoadTemplate(DBHelper.ExecuteQuery("SELECT * FROM OrganTemplates WHERE name='" + name + "';", DBHelper.BODY_DB_KEY).CreateDataReader());
+            LoadTemplateVitalLinks(DBHelper.ExecuteQuery("SELECT * FROM OrganVitalTemplates WHERE oName='" + name + "';", DBHelper.BODY_DB_KEY).CreateDataReader());
 
             // Template => Alle Arbeitswerte auf Default
             condition = 100.00;

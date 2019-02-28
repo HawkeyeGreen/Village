@@ -9,6 +9,11 @@ namespace Village.VillageGame.DatabaseManagement
 {
     public static class DBHelper
     {
+        #region DB-Keys
+        public static readonly string BODY_DB_KEY = "Body";
+        public static readonly string SUBSTANCES_DB_KEY = "Substances";
+        #endregion
+
         private static Dictionary<string, SQLiteConnection> currentConnections = new Dictionary<string, SQLiteConnection>();
         private static Dictionary<string, int> useCounter = new Dictionary<string, int>();
         private static Dictionary<string, string> cachedLocation = new Dictionary<string, string>();

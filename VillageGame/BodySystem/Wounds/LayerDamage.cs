@@ -1,23 +1,29 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Village.VillageGame.BodySystem.Wounds
 {
     struct LayerDamage
     {
-        LayerDamageDepth depth;
-        double area;
-        WoundType type;
+        private LayerDamageDepth depth;
+        private double area;
+        private WoundType type;
+        private List<string> damagedFeatures;
 
         public LayerDamageDepth Depth => depth;
         public double Area => area;
         public WoundType Type => type;
+        public List<string> DamagedFeatures => damagedFeatures;
 
-        public static LayerDamage NoDamage => new LayerDamage(LayerDamageDepth.Surface, 0, WoundType.Not_A_Touch);
 
-        public LayerDamage(LayerDamageDepth depth, double area, WoundType type)
+        public static LayerDamage NoDamage => new LayerDamage(LayerDamageDepth.Surface, 0, WoundType.Not_A_Touch, null);
+
+        public LayerDamage(LayerDamageDepth depth, double area, WoundType type, List<string> dmgFeatures)
         {
             this.depth = depth;
             this.area = area;
             this.type = type;
+            damagedFeatures = dmgFeatures;
         }
 
     }

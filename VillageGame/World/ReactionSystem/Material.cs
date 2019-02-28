@@ -15,7 +15,9 @@ namespace Village.VillageGame.World.ReactionSystem
         private string displayName_Key;
         private string displayDescr_Key;
 
-        private static readonly string dbBaseKey = "Substances";
+        
+
+
         private static readonly string breakable = "Breakable";
         private static readonly string bendable = "Bendable";
         private static readonly string penetrable = "Penetrable";
@@ -59,9 +61,9 @@ namespace Village.VillageGame.World.ReactionSystem
         public Material(string name)
         {
             tags = new TagSystem.TagSet();
-            tags.FillTagSet(name, dbBaseKey);
+            tags.FillTagSet(name, DBHelper.SUBSTANCES_DB_KEY);
             this.name = name;
-            Load(DBHelper.ExecuteQuery("SELECT * FROM Materials WHERE name='" + name + "';", dbBaseKey).CreateDataReader());
+            Load(DBHelper.ExecuteQuery("SELECT * FROM Materials WHERE name='" + name + "';", DBHelper.SUBSTANCES_DB_KEY).CreateDataReader());
         }
 
         /// <summary>

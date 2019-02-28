@@ -2,35 +2,34 @@
 using Village.VillageGame.World.ReactionSystem;
 using Village.VillageGame.BodySystem.Wounds;
 using Village.VillageGame.CombatSystem;
+using System.Data;
+using Village.VillageGame.DatabaseManagement;
 
 namespace Village.VillageGame.BodySystem
 {
     struct BodyLayer
     {
+        private int ID;
+
         private List<LayerDamage> damages;
-        private string[] features;
+        private BodyFeature[] features;
         private Material material;
 
-        public string[] Features => features;
+        public BodyFeature[] Features => features;
         public List<LayerDamage> Damages => damages;
         public Material Material => material;
 
-        public BodyLayer(string materialName, List<string> _features, string materialDB = "")
+        public BodyLayer(int layerID, string materialName, string DB)
         {
             damages = new List<LayerDamage>();
+            ID = layerID;
 
-            if(materialDB != "")
-            {
-                material = new Material(materialName, materialDB);
-            }
-            else
-            {
-                material = new Material(materialName);
-            }
+            DataTableReader reader;
+            material = new Material(materialName, DB);
+            reader = DBHelper.ExecuteQuery("SELECT * FROM BodyLayers WHERE ID=" + layerID + ";", DB).CreateDataReader();
 
-            features = new string[_features.Count];
-            _features.CopyTo(features);
-            
+
+
         }
 
         public LayerDamage ApplyAttack(AttackNugget attack)
@@ -40,28 +39,43 @@ namespace Village.VillageGame.BodySystem
             switch (answer)
             {
                 case MaterialAnswer.Repelled:
-                    return new LayerDamage(LayerDamageDepth.Surface, attack.HitArea , WoundType.Scratch);
+                    return LayerDamage.NoDamage;
                 case MaterialAnswer.Withstand:
                     return LayerDamage.NoDamage;
                 case MaterialAnswer.Penetrated:
-                    damage = new LayerDamage(LayerDamageDepth.Penetrated, attack.HitArea, WoundType.Puncture);
+                    damage = new LayerDamage(LayerDamageDepth.Penetrated, attack.HitArea, WoundType.Puncture, CheckForFeatureDamages(WoundType.Puncture, attack.HitArea));
                     damages.Add(damage);
                     return damage;
                 case MaterialAnswer.Cutted:
-                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Cut);
+                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Cut, CheckForFeatureDamages(WoundType.Cut, attack.HitArea));
                     damages.Add(damage);
                     return damage;
                 case MaterialAnswer.Bend:
-                    damage = new LayerDamage(LayerDamageDepth.HalfDeep, attack.HitArea, WoundType.Blunt);
+                    damage = new LayerDamage(LayerDamageDepth.HalfDeep, attack.HitArea, WoundType.Blunt, CheckForFeatureDamages(WoundType.Blunt, attack.HitArea));
                     damages.Add(damage);
                     return damage;
                 case MaterialAnswer.Broken:
-                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Blunt);
+                    damage = new LayerDamage(LayerDamageDepth.Deep, attack.HitArea, WoundType.Blunt, CheckForFeatureDamages(WoundType.Blunt, attack.HitArea));
                     damages.Add(damage);
                     return damage;
                 default:
                     return LayerDamage.NoDamage;
             }
+        }
+
+        private List<string> CheckForFeatureDamages(WoundType wType, double hitArea)
+        {
+            List<string> dmgFeatures = new List<string>();
+
+            foreach (BodyFeature feature in features)
+            {
+                if (feature.Hitted(hitArea, wType))
+                {
+                    dmgFeatures.Add(feature.Name);
+                }
+            }
+
+            return dmgFeatures;
         }
     }
 }

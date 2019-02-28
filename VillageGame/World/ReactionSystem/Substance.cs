@@ -13,7 +13,6 @@ namespace Village.VillageGame.World.ReactionSystem
     public class Substance
     {
         private string displayName;
-        private static readonly string dbBaseKey = "Substances";
         private static Dictionary<string, Substance> instances = new Dictionary<string, Substance>();
         private string name;
         private TagSet tags = new TagSet();
@@ -39,12 +38,12 @@ namespace Village.VillageGame.World.ReactionSystem
         {
             name = _Name;
             Load();
-            tags.FillTagSet(name, dbBaseKey);
+            tags.FillTagSet(name, DBHelper.SUBSTANCES_DB_KEY);
         }
 
         private void Load()
         {
-            DataTableReader reader = DBHelper.ExecuteQuery("SELECT * FROM Substances WHERE name='" + name + "';", dbBaseKey).CreateDataReader();
+            DataTableReader reader = DBHelper.ExecuteQuery("SELECT * FROM Substances WHERE name='" + name + "';", DBHelper.SUBSTANCES_DB_KEY).CreateDataReader();
             if(reader.HasRows)
             {
                 reader.Read();
