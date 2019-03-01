@@ -80,6 +80,9 @@
     <Compile Include="VillageGame\World\ReactionSystem\Material.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\MaterialAnswer.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Temperature.cs" />
+    <Compile Include="VillageGame\World\TimeSystem\VillageCalendar.cs" />
+    <Compile Include="VillageGame\World\TimeSystem\VillageMonth.cs" />
+    <Compile Include="VillageGame\World\TimeSystem\VillageTime.cs" />
     <Compile Include="VillageGame\World\VillageMap\Quad.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Phase.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Substance.cs" />

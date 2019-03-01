@@ -4,6 +4,7 @@ using Village.VillageGame.BodySystem.Wounds;
 using Village.VillageGame.CombatSystem;
 using System.Data;
 using Village.VillageGame.DatabaseManagement;
+using System;
 
 namespace Village.VillageGame.BodySystem
 {
@@ -19,17 +20,37 @@ namespace Village.VillageGame.BodySystem
         public List<LayerDamage> Damages => damages;
         public Material Material => material;
 
-        public BodyLayer(int layerID, string materialName, string DB)
+        /// <summary>
+        /// Dieser Konstruktor lädt eine Layer-Instanz aus der angegebenen DB.
+        /// </summary>
+        /// <param name="layerID">Die ID des Layers.</param>
+        /// <param name="DB">Die Datenbank, in der der Layer abegespeichert wurde.</param>
+        public BodyLayer(int layerID, string DB)
         {
             damages = new List<LayerDamage>();
+
             ID = layerID;
-
-            DataTableReader reader;
-            material = new Material(materialName, DB);
+            DataTableReader reader;     
+            
+            // Lade das Material aus der DB
             reader = DBHelper.ExecuteQuery("SELECT * FROM BodyLayers WHERE ID=" + layerID + ";", DB).CreateDataReader();
+            reader.Read();
+            material = new Material(Convert.ToString(reader.GetString(reader.GetOrdinal("mName"))), DB);
+            reader.Close();
 
-
-
+            // Lade die Layer-Features aus der DB
+            reader = DBHelper.ExecuteQuery("SELECT * FROM BodyLayerFeatures WHERE lID=" + layerID + ";", DB).CreateDataReader();
+            List<string> _features = new List<string>();
+            while (reader.Read())
+            {
+                _features.Add(Convert.ToString(reader.GetString(reader.GetOrdinal("fName"))));
+            }
+            features = new BodyFeature[_features.Count];
+            for(int i = 0; i < _features.Count; i++)
+            {
+                features[i] = BodyFeature.GetBodyFeature(_features[i], DB);
+            }
+            reader.Close();
         }
 
         public LayerDamage ApplyAttack(AttackNugget attack)
@@ -39,7 +60,7 @@ namespace Village.VillageGame.BodySystem
             switch (answer)
             {
                 case MaterialAnswer.Repelled:
-                    return LayerDamage.NoDamage;
+                    return LayerDamage.Repelled;
                 case MaterialAnswer.Withstand:
                     return LayerDamage.NoDamage;
                 case MaterialAnswer.Penetrated:

@@ -1,7 +1,7 @@
 ﻿
 namespace Village.VillageGame.BodySystem.Wounds
 {
-    enum WoundType
+    public enum WoundType
     {
         Not_A_Touch,
         Scratch,
@@ -24,5 +24,23 @@ namespace Village.VillageGame.BodySystem.Wounds
 
         public static string[] WoundTypes => WoundTypes;
 
+        public static WoundType ConvertToWoundType(string name)
+        {
+            for (int i = 0; i < woundTypes.Length; i++)
+            {
+                if (woundTypes[i] == name) { return ConvertToWoundType(i); }
+            }
+
+            return WoundType.Not_A_Touch;
+        }
+
+        public static WoundType ConvertToWoundType(int index)
+        {
+            if (index < woundTypes.Length)
+            {
+                return (WoundType)index;
+            }
+            return WoundType.Not_A_Touch;
+        }
     }
 }
