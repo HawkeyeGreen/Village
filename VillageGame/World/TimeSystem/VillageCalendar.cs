@@ -3,43 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Village.VillageGame.DatabaseManagement;
 
 namespace Village.VillageGame.World.TimeSystem
 {
     public class VillageCalendar
     {
-        private static VillageCalendar currentCalendar;
-        private LinkedList<VillageMonth> months;
-        private LinkedList<VillageMonth>.Enumerator enumerator;
+        private static Dictionary<string, VillageCalendar> loadedCalendars = new Dictionary<string, VillageCalendar>();
 
-        private VillageCalendar(string DB)
+        private VillageYear year;
+        private int currentYear;
+
+        private VillageCalendar(string name)
         {
-            enumerator = months.GetEnumerator();
+
         }
 
-        private VillageCalendar()
+        public static VillageCalendar GetCalendar(string name)
         {
-            months = new LinkedList<VillageMonth>();
-
-
-            enumerator = months.GetEnumerator();
-        }
-
-        public static void Load(string DB)
-        {
-            currentCalendar = new VillageCalendar(DB);
-        }
-
-        public static void GenerateCalendar()
-        {
-            currentCalendar = new VillageCalendar();
-        }
-
-        public static VillageCalendar GetCalendar() => currentCalendar;
-
-        public VillageMonth GetCurrentMonth()
-        {
-            return enumerator.Current;
+            if (!loadedCalendars.ContainsKey(name))
+            {
+                loadedCalendars[name] = new VillageCalendar(name);
+            }
+            return loadedCalendars[name];
         }
 
         public void UpdateMonth()

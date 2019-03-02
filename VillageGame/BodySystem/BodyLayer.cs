@@ -21,7 +21,7 @@ namespace Village.VillageGame.BodySystem
         public Material Material => material;
 
         /// <summary>
-        /// 
+        /// Lädt ein Layer-Template aus der angegebenen Datenbank.
         /// </summary>
         /// <param name="layerTID">Kennung des Layers</param>
         /// <param name="DB">DB in der sich der Layer befindet</param>

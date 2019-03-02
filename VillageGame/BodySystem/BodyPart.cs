@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Village.VillageGame.World.ReactionSystem;
+using Village.VillageGame.DatabaseManagement;
 
 namespace Village.VillageGame.BodySystem
 {
@@ -24,14 +25,24 @@ namespace Village.VillageGame.BodySystem
         #endregion
 
         /// <summary>
-        /// Laden einer Part-Instanz
+        /// Laden eines PartTemplates aus der Datenbank.
         /// </summary>
         /// <param name="partID"></param>
         /// <param name="DB"></param>
         /// <param name="body"></param>
-        public BodyPart(int partID, string DB, Body body)
+        public BodyPart(string DB, int partTID, Body body)
         {
             myBody = body;
+            devastation = 0;
+
+            DataTableReader reader;
+            reader = DBHelper.ExecuteQuery("SELECT * FROM BodyPartTemplates", DB).CreateDataReader();
+
+        }
+
+        public static void CreateBodyPartTables(string DB)
+        {
+
         }
     }
 }

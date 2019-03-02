@@ -65,6 +65,8 @@
     <Compile Include="VillageGame\Menus\LabelLog.cs" />
     <Compile Include="VillageGame\Menus\Menu.cs" />
     <Compile Include="VillageGame\Menus\TestArena.cs" />
+    <Compile Include="VillageGame\NameSystem\MonthNameGenerator.cs" />
+    <Compile Include="VillageGame\NameSystem\NameGenerator.cs" />
     <Compile Include="VillageGame\TagSystem\TagSet.cs" />
     <Compile Include="VillageGame\Textures\GraphicsManager.cs" />
     <Compile Include="VillageGame\Trigger.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="VillageGame\World\Creatures\Creature.cs" />
     <Compile Include="VillageGame\World\Generator\PrimitiveGenerator.cs" />
     <Compile Include="VillageGame\World\Generator\SimplexNoiseGenerator.cs" />
+    <Compile Include="VillageGame\World\Generator\TimeGenerator.cs" />
     <Compile Include="VillageGame\World\GraphicalMapRepresentation\GraphicTile.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Aggregate.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Material.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="VillageGame\World\TimeSystem\VillageCalendar.cs" />
     <Compile Include="VillageGame\World\TimeSystem\VillageMonth.cs" />
     <Compile Include="VillageGame\World\TimeSystem\VillageTime.cs" />
+    <Compile Include="VillageGame\World\TimeSystem\VillageYear.cs" />
     <Compile Include="VillageGame\World\VillageMap\Quad.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Phase.cs" />
     <Compile Include="VillageGame\World\ReactionSystem\Substance.cs" />

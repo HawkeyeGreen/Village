@@ -23,7 +23,7 @@ namespace Village.VillageGame.Localization
         private Local(Language lang)
         {
             language = lang;
-            DBHelper.OpenConnection("Lang", "//Content//Main//");
+            DBHelper.OpenConnection(DBHelper.LANGUAGE_DB_KEY, "//Content//Main//");
             DataTableReader reader = DBHelper.ExecuteQuery("SELECT * FROM " + language + ";", "Lang").CreateDataReader();
 
             while (reader.Read())

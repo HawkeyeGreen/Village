@@ -14,6 +14,7 @@ namespace Village.VillageGame.DatabaseManagement
         #region DB-Keys
         public static readonly string BODY_DB_KEY = "Body";
         public static readonly string SUBSTANCES_DB_KEY = "Substances";
+        public static readonly string LANGUAGE_DB_KEY = "Lang";
         #endregion
 
         private static Dictionary<string, SQLiteConnection> currentConnections = new Dictionary<string, SQLiteConnection>();
