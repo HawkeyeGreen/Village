@@ -9,6 +9,8 @@ namespace Village.VillageGame.DatabaseManagement
 {
     public static class DBHelper
     {
+        private static readonly int DEBUG_LEVEL = 1;
+
         #region DB-Keys
         public static readonly string BODY_DB_KEY = "Body";
         public static readonly string SUBSTANCES_DB_KEY = "Substances";
@@ -25,16 +27,26 @@ namespace Village.VillageGame.DatabaseManagement
         /// <returns>Ein valider SQLiteConnectionString.</returns>
         public static string CreateConnectionAndDatabase(string dbName, string initialQuery, string Location = "\\Databases\\")
         {
+            Hermes.GetInstance().log("DB", "Öffne Datenbankverbindung zu ... " + dbName, DEBUG_LEVEL);
             if (!currentConnections.ContainsKey(dbName))
             {
+                if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + Location))
+                {
+                    Hermes.GetInstance().log("DB", "Ordner muss erstellt werden... " + Location, DEBUG_LEVEL);
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + Location);
+                }
                 if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + Location + dbName + ".sqlite"))
                 {
+                    Hermes.GetInstance().log("DB", "Erstelle Datenbank...", DEBUG_LEVEL);
                     SQLiteConnection.CreateFile(AppDomain.CurrentDomain.BaseDirectory + Location + dbName + ".sqlite");
                     currentConnections[dbName] = new SQLiteConnection("Data Source=" + AppDomain.CurrentDomain.BaseDirectory + Location + dbName + ".sqlite" + ";Version=3;");
                     useCounter[dbName] = 0;
                     cachedLocation[dbName] = Location;
                     currentConnections[dbName].Open();
-                    ExecuteCommandNonQuery(initialQuery, dbName); // Führt alle Befehle für das initiale aufsetzen der DB aus
+                    if(initialQuery != "")
+                    {
+                        ExecuteCommandNonQuery(initialQuery, dbName); // Führt alle Befehle für das initiale aufsetzen der DB aus
+                    }
                 }
                 else
                 {
@@ -68,7 +80,7 @@ namespace Village.VillageGame.DatabaseManagement
             cachedLocation[dbName] = Location;
             currentConnections[dbName] = new SQLiteConnection("Data Source=" + AppDomain.CurrentDomain.BaseDirectory + Location + dbName + ".sqlite" + ";Version=3;");
             currentConnections[dbName].Open();
-            Hermes.getInstance().log("DBManagement", "Folgende DB geoeffnet: " + dbName, 4);
+            Hermes.GetInstance().log("DBManagement", "Folgende DB geoeffnet: " + dbName, DEBUG_LEVEL);
         }
 
         /// <summary>
@@ -91,12 +103,12 @@ namespace Village.VillageGame.DatabaseManagement
                     OpenConnection(dbString, cachedLocation[dbString]);
                 }
                 command.Dispose();
-                Hermes.getInstance().log("Following command was executed: " + cmdString);
+                Hermes.GetInstance().log("Following command was executed: " + cmdString);
             }
             catch (Exception e)
             {
-                Hermes.getInstance().log("DB","An error occured while executing this command: " + cmdString + " on the following database " + dbString, 0);
-                Hermes.getInstance().log("DB","The error was: " + e.Message, 0);
+                Hermes.GetInstance().log("DB","An error occured while executing this command: " + cmdString + " on the following database " + dbString, DEBUG_LEVEL);
+                Hermes.GetInstance().log("DB","The error was: " + e.Message, DEBUG_LEVEL);
             }
         }
 
@@ -115,12 +127,12 @@ namespace Village.VillageGame.DatabaseManagement
 
                 sqlite_adapter = new SQLiteDataAdapter(cmdString, currentConnections[dbString]);
 
-                Hermes.getInstance().log("Following command will be executed: " + cmdString);
+                Hermes.GetInstance().log("Following command will be executed: " + cmdString);
 
                 DataSet Return = new DataSet();
 
                 int rows = sqlite_adapter.Fill(Return);
-                Hermes.getInstance().log("This amount of rows was found: " + rows.ToString());
+                Hermes.GetInstance().log("This amount of rows was found: " + rows.ToString());
 
                 if (useCounter[dbString] >= 25)
                 {
@@ -133,7 +145,7 @@ namespace Village.VillageGame.DatabaseManagement
             }
             catch (Exception e)
             {
-                Hermes.getInstance().log("DB", "Following error occured: " + e.Message + " on the following database " + dbString, 0);
+                Hermes.GetInstance().log("DB", "Following error occured: " + e.Message + " on the following database " + dbString, DEBUG_LEVEL);
                 return null;
             }
 
@@ -141,7 +153,7 @@ namespace Village.VillageGame.DatabaseManagement
 
         public static void OpenMainConnections()
         {
-            Hermes.getInstance().log("DB-System", "Alle Hauptverbindungen verweden vorbreitet...", 1);
+            Hermes.GetInstance().log("DB-System", "Alle Hauptverbindungen werden vorbreitet...", DEBUG_LEVEL);
             OpenConnection("Substances", "//Content//Main//");
             OpenConnection("Body", "//Content//Main//");
         }

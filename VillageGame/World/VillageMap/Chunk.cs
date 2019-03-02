@@ -63,7 +63,7 @@ namespace Village.VillageGame.World.VillageMap
             leftBackBottom = corner;
             rightFrontTop = new Vector3(corner.X + length, corner.Y + width, corner.Z + height);
             quads = new List<Quad[,]>();
-            Hermes.getInstance().log(this, "Ein Chunk an Position: " + BaseCorner + " wurde erstellt mit den Dimensionen [" + length + " | " + width + " | " + height + "]");
+            Hermes.GetInstance().log(this, "Ein Chunk an Position: " + BaseCorner + " wurde erstellt mit den Dimensionen [" + length + " | " + width + " | " + height + "]");
             for (int i = 0; i < height; i += 2)
             {
                 Quad[,] level = new Quad[length, width];
@@ -88,7 +88,7 @@ namespace Village.VillageGame.World.VillageMap
         /// <param name="quad">Füg.Mich.EIN.</param>
         public void AddQuad(Quad quad)
         {
-            Hermes.getInstance().log(this, " Ein Quad wird hinzugefügt: " + quad, 0);
+            Hermes.GetInstance().log(this, " Ein Quad wird hinzugefügt: " + quad, 0);
             Vector3 relativPosition = quad.AbsolutePosition - BaseCorner;
             int x = Convert.ToInt32(Math.Floor(relativPosition.X / 2.0));
             int y = Convert.ToInt32(Math.Floor(relativPosition.Y / 2.0));

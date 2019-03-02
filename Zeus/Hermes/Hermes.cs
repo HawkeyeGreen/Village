@@ -56,7 +56,7 @@ namespace Zeus.Hermes
         /// <summary> 
         /// Gets the one and only instance of the Hermes-Logger.
         /// </summary> 
-        public static Hermes getInstance()
+        public static Hermes GetInstance()
         {
             if(instance == null)
             {

@@ -29,7 +29,7 @@ namespace Village.VillageGame.Localization
             while (reader.Read())
             {
                 localStrings[reader.GetString(reader.GetOrdinal("LKey"))] = reader.GetString(reader.GetOrdinal("LStr"));
-                Hermes.getInstance().log(this, "Folgender lang-Str wurde geladen: " + reader.GetString(reader.GetOrdinal("LStr")) + " | Gespeichert unter: " + reader.GetString(reader.GetOrdinal("LKey")), debugLvl);
+                Hermes.GetInstance().log(this, "Folgender lang-Str wurde geladen: " + reader.GetString(reader.GetOrdinal("LStr")) + " | Gespeichert unter: " + reader.GetString(reader.GetOrdinal("LKey")), debugLvl);
             }
             reader.Close();
         }
@@ -47,20 +47,20 @@ namespace Village.VillageGame.Localization
         {
             if(language != newLange)
             {
-                Hermes.getInstance().log("Localization", "Sprache wurde auf " + newLange + " umgestellt.", debugLvl);
+                Hermes.GetInstance().log("Localization", "Sprache wurde auf " + newLange + " umgestellt.", debugLvl);
                 language = newLange;
                 DataTableReader reader = DBHelper.ExecuteQuery("SELECT * FROM " + language + ";", "Lang").CreateDataReader();
 
                 while (reader.Read())
                 {
                     localStrings[reader.GetString(reader.GetOrdinal("LKey"))] = reader.GetString(reader.GetOrdinal("LStr"));
-                    Hermes.getInstance().log("Localization", "Folgender lang-Str wurde geladen: " + reader.GetString(reader.GetOrdinal("LStr")) + " | Gespeichert unter: " + reader.GetString(reader.GetOrdinal("LKey")), debugLvl);
+                    Hermes.GetInstance().log("Localization", "Folgender lang-Str wurde geladen: " + reader.GetString(reader.GetOrdinal("LStr")) + " | Gespeichert unter: " + reader.GetString(reader.GetOrdinal("LKey")), debugLvl);
                 }
                 reader.Close();
             }
             else
             {
-                Hermes.getInstance().log("Localization", "Es wurde versucht die Sprache umzustellen, aber die Sprache war bereits eingestellt. \n Alte Sprache: " + language + " \n Neue Sprache: " + newLange, debugLvl);
+                Hermes.GetInstance().log("Localization", "Es wurde versucht die Sprache umzustellen, aber die Sprache war bereits eingestellt. \n Alte Sprache: " + language + " \n Neue Sprache: " + newLange, debugLvl);
             }
 
         }

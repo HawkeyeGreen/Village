@@ -8,6 +8,7 @@ using Zeus.Hermes;
 using Village.VillageGame.DatabaseManagement;
 
 using Village.VillageGame.World.Generator;
+using Village.VillageGame.BodySystem;
 
 namespace Village
 {
@@ -40,8 +41,8 @@ namespace Village
         protected override void Initialize()
         {
             IsMouseVisible = true;
-            Hermes.getInstance();
-            DBHelper.OpenMainConnections();
+            Hermes.GetInstance();
+            DBHelper.OpenMainConnections();          
             base.Initialize();
         }
 
@@ -64,7 +65,7 @@ namespace Village
         /// </summary>
         protected override void UnloadContent()
         {
-            Hermes.getInstance().shutdownHermes();
+            Hermes.GetInstance().shutdownHermes();
         }
 
         /// <summary>

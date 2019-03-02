@@ -56,7 +56,7 @@ namespace Village.VillageGame.World.VillageMap
             {
                 DBHelper.OpenConnection(dbFileName, location);
                 dbString = dbFileName;
-                Hermes.getInstance().log(this, "Map-Database wurde gefunden.", 3);
+                Hermes.GetInstance().log(this, "Map-Database wurde gefunden.", 3);
                 DataTableReader reader = DBHelper.ExecuteQuery("SELECT * FROM Chunks", dbString).CreateDataReader();
                 while (reader.Read())
                 {
@@ -67,7 +67,7 @@ namespace Village.VillageGame.World.VillageMap
             }
             else
             {
-                Hermes.getInstance().log(this, "Map-Database wurde nicht gefunden. Lege an...", 3);
+                Hermes.GetInstance().log(this, "Map-Database wurde nicht gefunden. Lege an...", 3);
                 string initialCMD =
                     "CREATE TABLE [Chunks] (" +
                     "[id] int not null primary key unique," +
@@ -88,7 +88,7 @@ namespace Village.VillageGame.World.VillageMap
                     ");";
 
                 dbString = DBHelper.CreateConnectionAndDatabase(dbFileName, initialCMD, location);
-                Hermes.getInstance().log(this, "Map-Database wurde angelegt. Folgender dbString wurde zugewiesen: " + dbString, 3);
+                Hermes.GetInstance().log(this, "Map-Database wurde angelegt. Folgender dbString wurde zugewiesen: " + dbString, 3);
             }
         }
 
@@ -112,11 +112,11 @@ namespace Village.VillageGame.World.VillageMap
             int chunk_z = defineChunkDimension(z);
 
             int l = x / chunk_x;
-            Hermes.getInstance().log(this, l.ToString() + " Chunks in X-Richtung.", 4);
+            Hermes.GetInstance().log(this, l.ToString() + " Chunks in X-Richtung.", 4);
             int w = y / chunk_y;
-            Hermes.getInstance().log(this, w.ToString() + " Chunks in Y-Richtung.", 4);
+            Hermes.GetInstance().log(this, w.ToString() + " Chunks in Y-Richtung.", 4);
             int h = z / chunk_z;
-            Hermes.getInstance().log(this, h.ToString() + " Chunks in Z-Richtung.", 4);
+            Hermes.GetInstance().log(this, h.ToString() + " Chunks in Z-Richtung.", 4);
 
             int c = 0;
 

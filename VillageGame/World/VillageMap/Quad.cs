@@ -111,7 +111,7 @@ namespace Village.VillageGame.World.VillageMap
             DBString = dbKey;
             _ID = counter;
             counter++;
-            Hermes.getInstance().log(this, "A Quad (No: " + counter + ") was generated. ");
+            Hermes.GetInstance().log(this, "A Quad (No: " + counter + ") was generated. ");
         }
 
 
@@ -175,18 +175,18 @@ namespace Village.VillageGame.World.VillageMap
             {
                 if (AbsolutePosition == absPosition)
                 {
-                    Hermes.getInstance().log(this, "I am this Quad!" + this.ToString());
+                    Hermes.GetInstance().log(this, "I am this Quad!" + this.ToString());
                     return this;
                 }
                 else
                 {
-                    Hermes.getInstance().log(this, "Nach mir nur die Flut... " + this.ToString());
+                    Hermes.GetInstance().log(this, "Nach mir nur die Flut... " + this.ToString());
                     return null;
                 }
             }
             else
             {
-                Hermes.getInstance().log(this, "I am NOT this Quad!" + this.ToString());
+                Hermes.GetInstance().log(this, "I am NOT this Quad!" + this.ToString());
                 foreach (Quad q in subQuads)
                 {
                     Quad quad = q.GetQuad(absPosition);
