@@ -1,6 +1,6 @@
 ﻿namespace Village.VillageGame.World.ReactionSystem
 {
-    enum MaterialAnswer
+    public enum MaterialAnswer
     {
         Repelled,
         Withstand,

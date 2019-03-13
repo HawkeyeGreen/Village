@@ -24,6 +24,9 @@ namespace Village.VillageGame.BodySystem
 
         TagSet tags = new TagSet();
 
+        public void Tick()
+        {
 
+        }
     }
 }

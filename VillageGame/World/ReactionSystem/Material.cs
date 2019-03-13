@@ -9,14 +9,11 @@ using Village.VillageGame.DatabaseManagement;
 
 namespace Village.VillageGame.World.ReactionSystem
 {
-    class Material
+    public class Material
     {
         private readonly string name;
         private string displayName_Key;
         private string displayDescr_Key;
-
-        
-
 
         private static readonly string breakable = "Breakable";
         private static readonly string bendable = "Bendable";
@@ -24,9 +21,7 @@ namespace Village.VillageGame.World.ReactionSystem
         private static readonly string cutable = "Cutable";
 
         private Substance substance;
-        private Temperature temperature;
 
-        public Temperature Temperature => temperature;
         public string Name => name;
 
         public string DisplayNameKey => displayName_Key;
@@ -122,23 +117,25 @@ namespace Village.VillageGame.World.ReactionSystem
         public MaterialAnswer ApplyForce(double forcePerUnit, int sharpness, Material material)
         {
             // Ist dieses Material härter, so wirft es den Angriff zurück
-            if(substance.Hardness > material.Substance.Hardness)
+            if (substance.Hardness > material.Substance.Hardness)
             {
                 return MaterialAnswer.Repelled;
             }
 
             // Die Substance ist scharf genug, um dieses Substance zu schneiden
-            if(Cutable && (sharpness > cuttingPoint))
+            if (Cutable && (sharpness > cuttingPoint))
             {
                 return MaterialAnswer.Cutted;
             }
 
 
-            if(Breakable && (forcePerUnit > breakingForce)) { return MaterialAnswer.Broken; }
-            else if( Penetrable && (forcePerUnit > penetratingForce)) { return MaterialAnswer.Penetrated; }
-            else if(Bendable && (forcePerUnit > bendingForce)) { return MaterialAnswer.Bend; }
+            if (Breakable && (forcePerUnit > breakingForce)) { return MaterialAnswer.Broken; }
+            else if (Penetrable && (forcePerUnit > penetratingForce)) { return MaterialAnswer.Penetrated; }
+            else if (Bendable && (forcePerUnit > bendingForce)) { return MaterialAnswer.Bend; }
 
             return MaterialAnswer.Withstand;
         }
+
+
     }
 }
