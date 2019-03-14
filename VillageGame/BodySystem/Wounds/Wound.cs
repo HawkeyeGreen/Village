@@ -16,5 +16,8 @@ namespace Village.VillageGame.BodySystem.Wounds
         public bool Healed => healed;
 
         private List<Subscriber> subscribers;
+
+        public void Unsubscribe(Subscriber subscriber) => subscribers.Remove(subscriber);
+        public void Subscribe(Subscriber subscriber) => subscribers.Add(subscriber);
     }
 }

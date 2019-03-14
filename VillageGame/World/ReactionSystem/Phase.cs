@@ -58,6 +58,54 @@ namespace Village.VillageGame.World.ReactionSystem
         public Material Material => material;
 
         /// <summary>
+        /// Die Stoffmenge in mol.
+        /// </summary>
+        public double Amount
+        {
+            get => amount;
+
+            set
+            {
+                amount = value;
+
+                mass = amount * material.Substance.Mass / 1000;               
+                volume = mass / material.Substance.GetDensity(aggregate);
+            }
+        }
+
+        /// <summary>
+        /// Das Volumen in m3.
+        /// </summary>
+        public double Volume
+        {
+            get => volume;
+
+            set
+            {
+                volume = value;
+
+                mass = volume * material.Substance.GetDensity(aggregate);
+                amount = mass / material.Substance.Mass / 100;
+            }
+        }
+
+        /// <summary>
+        /// Die derzeitige Masse der Phase in kg.
+        /// </summary>
+        public double Mass
+        {
+            get => mass;
+
+            set
+            {
+                mass = value;
+
+                amount = mass / material.Substance.Mass / 100;
+                volume = mass / material.Substance.GetDensity(aggregate);
+            }
+        }
+
+        /// <summary>
         /// Initialisiert eine Phase mit allen wichtigen Parametern.
         /// </summary>
         /// <param name="amount">Die Stoffmenge in mol. Daraus werden Masse und Volumen hergeleitet.</param>
@@ -65,9 +113,8 @@ namespace Village.VillageGame.World.ReactionSystem
         public Phase(double amount, Material material, Temperature tmp)
         {
             temperature = tmp;
-            mass = amount * material.Substance.Mass / 1000;
             aggregate = material.Substance.GetAggregate(temperature);
-            volume = mass / material.Substance.GetDensity(aggregate);
+            Amount = amount;
             aggregateChange = AggregateChange.Stable;
         }
     }

@@ -14,6 +14,10 @@ namespace Village.VillageGame.BodySystem
         List<VitalSystem> vitalSystems = new List<VitalSystem>();
         List<string> vitalOrgans = new List<string>();
         List<Trauma> currentTraumata = new List<Trauma>();
+        List<FluidLoss> fluidLosses = new List<FluidLoss>();
+
+        Dictionary<string, BodyFluid> fluids = new Dictionary<string, BodyFluid>();
+        
 
         Dictionary<string, float> PartPercentages = new Dictionary<string, float>();
 
@@ -24,9 +28,31 @@ namespace Village.VillageGame.BodySystem
 
         TagSet tags = new TagSet();
 
+        /// <summary>
+        /// Aktualisiere alle Körperwerte. CombatTick!
+        /// </summary>
         public void Tick()
         {
+            #region FluidLoss
+            for(int i = 0; i < fluidLosses.Count; i++)
+            {
+                FluidLoss fluidLoss = fluidLosses[i];
+                double loss = fluidLoss.Tick();
 
+                if(fluids.ContainsKey(fluidLoss.Name) && loss != 0)
+                {
+                    BodyFluid fluid = fluids[fluidLoss.Name];
+                    fluid.CurrentVolume -= loss;
+                }
+
+                if (loss == 0)
+                {
+                    RemoveFluidLoss(fluidLoss);
+                }
+            }
+            #endregion
         }
+
+        public void RemoveFluidLoss(FluidLoss loss) => fluidLosses.Remove(loss);
     }
 }
