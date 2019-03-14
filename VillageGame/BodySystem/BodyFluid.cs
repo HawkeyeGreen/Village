@@ -14,8 +14,14 @@ namespace Village.VillageGame.BodySystem
     {
         private double maxVolume;
         private double currentVolume;
+
+        private SortedList<double, List<string>> borders;
+
         private readonly Phase fluid;
 
+        /// <summary>
+        /// Maximales Volumen der Körperflüssigkeit.
+        /// </summary>
         public double MaxVolume
         {
             get => maxVolume;
@@ -68,6 +74,29 @@ namespace Village.VillageGame.BodySystem
             currentVolume = startVolume;
             double amount = startVolume * fluidMaterial.Substance.GetDensity(fluidMaterial.Substance.GetAggregate(bodyTmp));
             fluid = new Phase(amount, fluidMaterial, bodyTmp);
+            borders = new SortedList<double, List<string>>();
+        }
+
+        /// <summary>
+        /// Gibt alle bis jetzt getriggerte Traumata zurück.
+        /// Beachtet NICHT, ob diese bereits aktiviert wurden.
+        /// </summary>
+        /// <returns>Eine Liste der Namen von auszulösenden Traumata.</returns>
+        public List<string> GetTraumata()
+        {
+            List<string> traumata = new List<string>();
+
+            foreach(KeyValuePair<double, List<string>> valuePair in borders)
+            {
+                if(currentVolume <= valuePair.Key)
+                {
+                    traumata.AddRange(valuePair.Value);
+                }
+            }
+
+            return traumata;
         }
     }
+
+
 }

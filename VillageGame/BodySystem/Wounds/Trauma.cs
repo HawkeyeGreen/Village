@@ -8,5 +8,19 @@ namespace Village.VillageGame.BodySystem.Wounds
 {
     class Trauma
     {
+        private int id;
+        private string causedBy;
+        private bool unique;
+        private string name;
+
+        public string Cause => causedBy;
+        public string Name => name;
+        public bool Unique => unique;
+        public int ID => id;
+
+        public void Refresh()
+        {
+
+        }
     }
 }

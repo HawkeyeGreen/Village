@@ -14,9 +14,11 @@ namespace Village.VillageGame.BodySystem
         List<VitalSystem> vitalSystems = new List<VitalSystem>();
         List<string> vitalOrgans = new List<string>();
         List<Trauma> currentTraumata = new List<Trauma>();
+
         List<FluidLoss> fluidLosses = new List<FluidLoss>();
 
         Dictionary<string, BodyFluid> fluids = new Dictionary<string, BodyFluid>();
+        
         
 
         Dictionary<string, float> PartPercentages = new Dictionary<string, float>();
@@ -50,9 +52,67 @@ namespace Village.VillageGame.BodySystem
                     RemoveFluidLoss(fluidLoss);
                 }
             }
+
+            // Check for triggered Traumata
+            
+            foreach(BodyFluid bodyFluid in fluids.Values)
+            {
+                List<string> traumata = bodyFluid.GetTraumata();
+
+                foreach(string trauma in traumata)
+                {
+                    List<Trauma> findings = LookUpTrauma(trauma);
+                    bool addable;
+
+                    if(findings.Count == 0)
+                    {
+                        addable = true;
+                    }
+                    else
+                    {
+                        addable = true;
+                        // Gucke, ob die gefundenen Traumata einzigartig sind oder bereits durch den Verlust der gegebenen Körperflüssigkeit verursacht wurden
+                        foreach(Trauma foundTrauma in findings)
+                        {
+                            if(foundTrauma.Unique || foundTrauma.Cause == "FluidLoss Of " + bodyFluid.Fluid.Substance.Name)
+                            {
+                                addable = false;
+                                foundTrauma.Refresh(); // Grund IMMER noch aktiv!
+                                break;
+                            }
+                        }                        
+                    }
+
+                    if (addable)
+                    {
+                        // Add Trauma
+                    }
+                }
+
+            }
+
             #endregion
         }
 
         public void RemoveFluidLoss(FluidLoss loss) => fluidLosses.Remove(loss);
+
+        public void Death()
+        {
+
+        }
+
+        private List<Trauma> LookUpTrauma(in string name)
+        {
+            List<Trauma> findings = new List<Trauma>();
+            foreach(Trauma trauma in currentTraumata)
+            {
+                if(trauma.Name == name)
+                {
+                    findings.Add(trauma);
+                }
+            }
+            return findings;
+        }
     }
+
 }
