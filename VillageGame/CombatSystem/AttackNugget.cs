@@ -5,7 +5,7 @@ namespace Village.VillageGame.CombatSystem
     struct AttackNugget
     {
         private float force;
-        public float Force => force;
+        public float Force { get => force; set => force = value; }
 
         private IWeapon weapon;
         public IWeapon Weapon => weapon;

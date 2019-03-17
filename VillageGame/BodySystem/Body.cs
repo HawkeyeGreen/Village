@@ -101,6 +101,11 @@ namespace Village.VillageGame.BodySystem
 
         }
 
+        public void WoundMe(List<LayerDamage> damages)
+        {
+
+        }
+
         private List<Trauma> LookUpTrauma(in string name)
         {
             List<Trauma> findings = new List<Trauma>();

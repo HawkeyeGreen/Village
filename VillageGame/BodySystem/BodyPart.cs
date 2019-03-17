@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Village.VillageGame.BodySystem.Wounds;
 using Village.VillageGame.CombatSystem;
 using Village.VillageGame.DatabaseManagement;
 
@@ -15,10 +16,7 @@ namespace Village.VillageGame.BodySystem
         private BodyPart myConnector;
         private BodyPart myConnected;
 
-        List<VitalSystem> subscribers = new List<VitalSystem>();
-        List<BodyLayer> layers = new List<BodyLayer>();
-
-        Dictionary<int, List<Organ>> organs = new Dictionary<int, List<Organ>>(); // layer, organs im layer
+        List<BodyLayer> layers = new List<BodyLayer>();             
 
 
 
@@ -45,7 +43,30 @@ namespace Village.VillageGame.BodySystem
 
         public void ApplyAttack(AttackNugget attack)
         {
+            List<LayerDamage> damages = new List<LayerDamage>();
 
+            for(int l = 0; l < layers.Count; l++)
+            {
+                LayerDamage layerDamage = layers[l].ApplyAttack(attack);
+
+                if(layerDamage.Equals(LayerDamage.Repelled))
+                {
+                    // Handle DamageReturn
+
+                }
+
+
+                attack.Force -= (float)layers[l].ForceReduction;
+                if(attack.Force <= 0)
+                {
+                    break;
+                }
+            }
+
+            if(damages.Count > 0)
+            {
+                myBody.WoundMe(damages);
+            }
         }
     }
 }

@@ -61,6 +61,7 @@
     <Compile Include="VillageGame\Camera\Camera.cs" />
     <Compile Include="VillageGame\CombatSystem\AttackDirection.cs" />
     <Compile Include="VillageGame\CombatSystem\AttackNugget.cs" />
+    <Compile Include="VillageGame\ConditionSystem\Condition.cs" />
     <Compile Include="VillageGame\Helper\RandomGenerator.cs" />
     <Compile Include="VillageGame\Subscriber.cs" />
     <Compile Include="VillageGame\Items\IWeapon.cs" />

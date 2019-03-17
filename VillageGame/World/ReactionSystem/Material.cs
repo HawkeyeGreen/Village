@@ -35,7 +35,12 @@ namespace Village.VillageGame.World.ReactionSystem
         public bool Penetrable => tags.ContainsTag(penetrable);
         public bool Cutable => tags.ContainsTag(cutable);
 
+        public double ForceReduction => forceReductionPerCM;
+
         public Substance Substance => substance;
+
+        // Die Menge an Kraft, welche pro cm Dicke aufgefangen wird
+        private double forceReductionPerCM;
 
         // Ab welcher Schärfe dieses Material geschnitten werden kann
         private int cuttingPoint;
@@ -80,6 +85,9 @@ namespace Village.VillageGame.World.ReactionSystem
 
             displayName_Key = Convert.ToString(reader.GetString(reader.GetOrdinal("displayKey")));
             displayDescr_Key = Convert.ToString(reader.GetString(reader.GetOrdinal("descrKey")));
+
+            forceReductionPerCM = Convert.ToDouble(reader.GetDouble(reader.GetOrdinal("ForceReduction")));
+
             string subs = Convert.ToString(reader.GetString(reader.GetOrdinal("substance")));
 
             if (Cutable)

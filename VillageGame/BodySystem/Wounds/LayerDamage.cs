@@ -10,6 +10,9 @@ namespace Village.VillageGame.BodySystem.Wounds
     {
         private int ID;
 
+        private static readonly LayerDamage noDamage = new LayerDamage(LayerDamageDepth.NODAMAGE, 0, WoundType.Not_A_Touch, null);
+        private static readonly LayerDamage repelled = new LayerDamage(LayerDamageDepth.REPELLED, 0, WoundType.Not_A_Touch, null);
+
         private LayerDamageDepth depth;
         private double area;
         private WoundType type;
@@ -21,9 +24,9 @@ namespace Village.VillageGame.BodySystem.Wounds
         public List<string> DamagedFeatures => damagedFeatures;
 
 
-        public static LayerDamage NoDamage => new LayerDamage(LayerDamageDepth.NODAMAGE, 0, WoundType.Not_A_Touch, null);
+        public static ref readonly LayerDamage NoDamage => ref noDamage;
 
-        public static LayerDamage Repelled => new LayerDamage(LayerDamageDepth.REPELLED, 0, WoundType.Not_A_Touch, null);
+        public static ref readonly LayerDamage Repelled => ref repelled;
 
         /// <summary>
         /// Erstellt einen Schaden. !ID ist zuerst auf -1 gesetzt. Bis der Schaden gespeichert wurde,
